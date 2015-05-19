@@ -1,0 +1,26 @@
+{
+	"name": "javiexin/multiselpf",
+	"type": "phpbb-extension",
+	"description": "Adds a new type of Profile Fields, where multiple options may be selected.",
+	"homepage": "http://www.exincastillos.es/jxmods",
+	"version": "0.0.1",
+	"time": "2015-05-25",
+	"keywords": ["phpbb", "extension", "multiselpf", "multi", "selection", "profile", "field"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Javier Lopez (javiexin)",
+			"email": "javiexin@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"extra": {
+		"display-name": "Multi Selection Profile Fields",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.3,<3.2.*@dev"
+		}
+	}
+}

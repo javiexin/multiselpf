@@ -1,0 +1,10 @@
+services:
+    javiexin.multiselpf.profilefields.type.multisel:
+        class: javiexin\multiselpf\profilefields\type\type_multisel
+        arguments:
+            - @profilefields.lang_helper
+            - @request
+            - @template
+            - @user
+        tags:
+            - { name: profilefield.type }
