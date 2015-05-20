@@ -42,6 +42,7 @@ $lang = array_merge($lang, array(
 	'MAX_FIELD_OPTIONS'				=> 'Maximum number of options to select',
 	'MIN_FIELD_OPTIONS'				=> 'Minimum number of options to select',
 
+	'MAX_LOWER_MIN'					=> 'Inconsistent options: maximum lower than minimum.',
 	'FIELD_MULTISEL_TOO_FEW'		=> array(
 		1	=>	'You have not selected enough options for field “%2$s”. At least %1$d option must be selected.',
 		2	=>	'You have not selected enough options for field “%2$s”. At least %1$d options must be selected.',

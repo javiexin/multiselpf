@@ -92,9 +92,10 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	public function get_options($default_lang_id, $field_data)
 	{
 		$num_options = sizeof($field_data['lang_options']);
+		$maxlen = min($num_options, $field_data['field_maxlen']);
 		$options = array(
 			0 => array('TITLE' => $this->user->lang['MIN_FIELD_OPTIONS'],	'FIELD' => '<input type="number" min="0" max="' . $num_options . '" name="field_minlen" size="5" value="' . $field_data['field_minlen'] . '" />'),
-			1 => array('TITLE' => $this->user->lang['MAX_FIELD_OPTIONS'],	'FIELD' => '<input type="number" min="0" max="' . $num_options . '" name="field_maxlen" size="5" value="' . $field_data['field_maxlen'] . '" />'),
+			1 => array('TITLE' => $this->user->lang['MAX_FIELD_OPTIONS'],	'FIELD' => '<input type="number" min="0" max="' . $num_options . '" name="field_maxlen" size="5" value="' . $maxlen . '" />'),
 		);
 
 		return $options;
@@ -108,7 +109,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		return array(
 			'field_length'		=> 0,
 			'field_minlen'		=> 0,
-			'field_maxlen'		=> 5,
+			'field_maxlen'		=> 100,
 			'field_validation'	=> '',
 			'field_novalue'			=> '',
 			'field_default_value'	=> '',
@@ -164,6 +165,11 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			$this->lang_helper->load_option_lang($lang_id);
 		}
 
+		if ($field_value == $field_data['field_novalue'] && !$field_data['field_show_novalue'])
+		{
+			return null;
+		}
+
 		if (empty($field_value))
 		{
 			return '';
@@ -172,13 +178,13 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		$field_values = explode(FIELD_SEPARATOR, $field_value);
 		$field_value = '';
 
-		foreach ($field_values as $row)
+		foreach ($field_values as $value)
 		{
-			if (!$this->lang_helper->is_set($field_id, $lang_id, $row))
+			if (!$this->lang_helper->is_set($field_id, $lang_id, $value))
 			{
 				continue;
 			}
-			$field_value .= ((empty($field_value)) ? '' : ', ') . $this->lang_helper->is_set($field_id, $lang_id, $row);
+			$field_value .= ((empty($field_value)) ? '' : ', ') . $this->lang_helper->get($field_id, $lang_id, $value);
 		}
 		return $field_value;
 	}
@@ -231,7 +237,6 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			}
 		}
 
-		$profile_row['field_value'] = $value;
 		$this->template->assign_block_vars('multisel', array_change_key_case($profile_row, CASE_UPPER));
 
 		$options = $this->lang_helper->get($profile_row['field_id'], $profile_row['lang_id']);
@@ -290,22 +295,12 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		{
 			$error[] = $this->user->lang['NO_FIELD_ENTRIES'];
 		}
-
-		return $error;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function get_excluded_options($key, $action, $current_value, &$field_data, $step)
-	{
-		if ($step == 2 && $key == 'field_maxlen')
+		if ($field_data['field_minlen'] > $field_data['field_maxlen'])
 		{
-			// Get the number of options if this key is 'field_maxlen'
-			return sizeof(explode("\n", $this->request->variable('lang_options', '', true)));
+			$error[] = $this->user->lang['MAX_LOWER_MIN'];
 		}
 
-		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
+		return $error;
 	}
 
 	/**

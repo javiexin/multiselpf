@@ -42,6 +42,7 @@ $lang = array_merge($lang, array(
 	'MAX_FIELD_OPTIONS'				=> 'Número máximo de opciones a seleccionar',
 	'MIN_FIELD_OPTIONS'				=> 'Número mínimo de opciones a seleccionar',
 
+	'MAX_LOWER_MIN'					=> 'Opciones no coherentes: máximo menor que mínimo.',
 	'FIELD_MULTISEL_TOO_FEW'		=> array(
 		1	=>	'No ha seleccionado suficientes opciones para el campo “%2$s”. Al menos debe seleccionar %1$d opción.',
 		2	=>	'No ha seleccionado suficientes opciones para el campo “%2$s”. Al menos debe seleccionar %1$d opciones.',
