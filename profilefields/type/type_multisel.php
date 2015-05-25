@@ -343,12 +343,9 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	{
 		if ($step == 2 && in_array($key, array('field_novalue', 'field_default_value')))
 		{
-			// Read the array of options again if set
-			if ($this->request->is_set($key))
-			{
-				$current_value = implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value))));
-				$field_data[$key] = $current_value;
-			}
+			// Read the array of options again
+			$current_value = ($this->request->is_set($key)) ? implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value)))) : '';
+			$field_data[$key] = $current_value;
 			return $current_value;
 		}
 
