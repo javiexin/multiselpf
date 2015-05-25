@@ -93,9 +93,28 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	{
 		$num_options = sizeof($field_data['lang_options']);
 		$maxlen = min($num_options, $field_data['field_maxlen']);
+		$profile_row[0] = array(
+			'var_name'				=> 'field_default_value',
+			'field_id'				=> 1,
+			'lang_name'				=> $field_data['lang_name'],
+			'lang_explain'			=> $field_data['lang_explain'],
+			'lang_id'				=> $default_lang_id,
+			'field_default_value'	=> $field_data['field_default_value'],
+			'field_ident'			=> 'field_default_value',
+			'field_type'			=> $this->get_service_name(),
+			'lang_options'			=> $field_data['lang_options'],
+		);
+
+		$profile_row[1] = $profile_row[0];
+		$profile_row[1]['var_name'] = 'field_novalue';
+		$profile_row[1]['field_ident'] = 'field_novalue';
+		$profile_row[1]['field_default_value']	= $field_data['field_novalue'];
+
 		$options = array(
 			0 => array('TITLE' => $this->user->lang['MIN_FIELD_OPTIONS'],	'FIELD' => '<input type="number" min="0" max="' . $num_options . '" name="field_minlen" size="5" value="' . $field_data['field_minlen'] . '" />'),
 			1 => array('TITLE' => $this->user->lang['MAX_FIELD_OPTIONS'],	'FIELD' => '<input type="number" min="0" max="' . $num_options . '" name="field_maxlen" size="5" value="' . $maxlen . '" />'),
+			2 => array('TITLE' => $this->user->lang['DEFAULT_VALUE'], 'FIELD' => $this->process_field_row('preview', $profile_row[0])),
+			3 => array('TITLE' => $this->user->lang['NO_VALUE_OPTION'], 'EXPLAIN' => $this->user->lang['NO_VALUE_OPTION_EXPLAIN'], 'FIELD' => $this->process_field_row('preview', $profile_row[1])),
 		);
 
 		return $options;
@@ -138,9 +157,10 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	*/
 	public function validate_profile_field(&$field_value, $field_data)
 	{
-		$field_size = empty($field_value) ? 0 : (int) sizeof(explode(FIELD_SEPARATOR, $field_value));
+		$field_value_array = empty($field_value) ? array() : explode(FIELD_SEPARATOR, $field_value);
+		$field_size = (int) sizeof($field_value_array);
 
-		if ($field_data['field_minlen'] && $field_size < $field_data['field_minlen'])
+		if ($field_data['field_required'] && $field_data['field_minlen'] && $field_size < $field_data['field_minlen'])
 		{
 			return $this->user->lang('FIELD_MULTISEL_TOO_FEW', (int) $field_data['field_minlen'], $this->get_field_name($field_data['lang_name']));
 		}
@@ -148,6 +168,25 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		if ($field_data['field_maxlen'] && $field_size > $field_data['field_maxlen'])
 		{
 			return $this->user->lang('FIELD_MULTISEL_TOO_MANY', (int) $field_data['field_maxlen'], $this->get_field_name($field_data['lang_name']));
+		}
+
+		if ($field_value == $field_data['field_novalue'] && $field_data['field_required'])
+		{
+			return $this->user->lang('FIELD_REQUIRED', $this->get_field_name($field_data['lang_name']));
+		}
+
+		// retrieve option lang data if necessary
+		if (!$this->lang_helper->is_set($field_data['field_id'], $field_data['lang_id'], 1))
+		{
+			$this->lang_helper->load_option_lang($field_data['lang_id']);
+		}
+
+		foreach ($field_value_array as $field_value_item)
+		{
+			if (!$this->lang_helper->is_set($field_data['field_id'], $field_data['lang_id'], (int) $field_value_item))
+			{
+				return $this->user->lang('FIELD_INVALID_VALUE', $this->get_field_name($field_data['lang_name']));
+			}
 		}
 
 		return false;
@@ -175,18 +214,18 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			return '';
 		}
 
-		$field_values = explode(FIELD_SEPARATOR, $field_value);
-		$field_value = '';
+		$field_value_array = explode(FIELD_SEPARATOR, $field_value);
+		$field_value_display = '';
 
-		foreach ($field_values as $value)
+		foreach ($field_value_array as $field_value_item)
 		{
-			if (!$this->lang_helper->is_set($field_id, $lang_id, $value))
+			if (!$this->lang_helper->is_set($field_id, $lang_id, (int) $field_value_item))
 			{
 				continue;
 			}
-			$field_value .= ((empty($field_value)) ? '' : ', ') . $this->lang_helper->get($field_id, $lang_id, $value);
+			$field_value_display .= ((empty($field_value_display)) ? '' : $this->user->lang['COMMA_SEPARATOR']) . $this->lang_helper->get($field_id, $lang_id, $field_value_item);
 		}
-		return $field_value;
+		return $field_value_display;
 	}
 
 	/**
@@ -214,16 +253,10 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	{
 		$profile_row['field_ident'] = (isset($profile_row['var_name'])) ? $profile_row['var_name'] : 'pf_' . $profile_row['field_ident'];
 		$field_ident = $profile_row['field_ident'];
-		$default_value = $profile_row['field_default_value'];
+		$default_value = array_map('intval', explode(FIELD_SEPARATOR, $profile_row['field_default_value']));
+		$user_field_value =	isset($this->user->profile_fields[$field_ident]) ? array_map('intval', explode(FIELD_SEPARATOR, $this->user->profile_fields[$field_ident])) : array(0);
 
-		$value = ($this->request->is_set($field_ident)) ? $this->request->variable($field_ident, $default_value) : ((!isset($this->user->profile_fields[$field_ident]) || $preview_options !== false) ? $default_value : $this->user->profile_fields[$field_ident]);
-
-		if (gettype($value) == 'string')
-		{
-			$value = utf8_normalize_nfc($value);
-		}
-
-		$value = explode(FIELD_SEPARATOR, $value);
+		$value = ($this->request->is_set($field_ident)) ? $this->request->variable($field_ident, $default_value) : ((!isset($this->user->profile_fields[$field_ident]) || $preview_options !== false) ? $default_value : $user_field_value);
 
 		if (!$this->lang_helper->is_set($profile_row['field_id'], $profile_row['lang_id'], 1))
 		{
@@ -301,6 +334,45 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		}
 
 		return $error;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function get_excluded_options($key, $action, $current_value, &$field_data, $step)
+	{
+		if ($step == 2 && in_array($key, array('field_novalue', 'field_default_value')))
+		{
+			// Read the array of options again if set
+			if ($this->request->is_set($key))
+			{
+				$current_value = implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value))));
+				$field_data[$key] = $current_value;
+			}
+			return $current_value;
+		}
+
+		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function prepare_hidden_fields($step, $key, $action, &$field_data)
+	{
+		if (!$this->request->is_set($key))
+		{
+			// Do not set this variable, we will use the default value
+			return null;
+		}
+		else if (in_array($key, array('field_novalue', 'field_default_value')))
+		{
+			return $this->request->variable($key, array(0));
+		}
+		else
+		{
+			return parent::prepare_hidden_fields($step, $key, $action, $field_data);
+		}
 	}
 
 	/**
