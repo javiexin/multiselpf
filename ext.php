@@ -109,7 +109,7 @@ class ext extends \phpbb\extension\base
 	{
 		global $db;
 		$config_text = $this->container->get('config_text');
-		
+
 		// Make sure we get an array, and with fully qualified type names (prepend prefix.)
 		$types = (!is_array($type)) ? array($prefix . $type) : array_map(function ($a) use ($prefix) { return $prefix . $a; }, $type);
 
