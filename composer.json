@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Adds a new type of Profile Fields, where multiple options may be selected.",
 	"homepage": "http://www.exincastillos.es/jxmods",
-	"version": "0.0.2",
-	"time": "2015-05-20",
+	"version": "0.0.3",
+	"time": "2015-05-27",
 	"keywords": ["phpbb", "extension", "multiselpf", "multi", "selection", "profile", "field"],
 	"license": "GPL-2.0",
 	"authors": [
