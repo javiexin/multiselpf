@@ -1,0 +1,27 @@
+<!-- Team badge in ucp_pm_viewmessage - Game Of Thrones House example -->
+<div class="house" style="display: none;">{PROFILE_JX_GOT_HOUSE_VALUE}</div>
+
+<!-- IF not $DEFINED_JXGOTHOUSE_UCP_PM_VIEWMESSAGE -->
+
+<style>
+.avatar-container {
+  padding-bottom: 16px;
+}
+.avatar-container .avatar {
+  position: relative;
+}
+.house {
+  position: absolute;
+  right: -16px;
+  bottom: -16px;
+}
+.house > img {
+  max-height: 32px;
+  width: auto;
+}
+</style>
+
+<!-- INCLUDEJS js/ucp_pm_viewmessage.js -->
+
+<!-- DEFINE $DEFINED_JXGOTHOUSE_UCP_PM_VIEWMESSAGE = true -->
+<!-- ENDIF -->

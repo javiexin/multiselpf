@@ -1,0 +1,37 @@
+<!-- Team badge in profile - Game Of Thrones House example -->
+<dl id="jxgothouse" class="right-box" style="display: none;">
+<dt class="profile-avatar">
+{PROFILE_JX_GOT_HOUSE_VALUE}
+</dt>
+<dd>
+<h3>{PROFILE_JX_GOT_HOUSE_VALUE_RAW}</h3>
+{PROFILE_JX_GOT_HOUSE_EXPLAIN}
+</dd>
+</dl>
+
+<!-- IF not $DEFINED_JXGOTHOUSE_MEMBERLIST_VIEW -->
+
+<style>
+.left-box.profile-details {
+	width: 75%;
+}
+.right-box .profile-avatar {
+	max-width: 128px;
+	padding: 15px 15px 5px;
+}
+.right-box .profile-avatar img {
+	height: auto;
+}
+#jxgothouse {
+	text-align: center;
+}
+#jxgothouse h3 {
+	border-width: 0;
+	font-size: 1.2em;
+}
+</style>
+
+<!-- INCLUDEJS js/memberlist_view.js -->
+
+<!-- DEFINE $DEFINED_JXGOTHOUSE_MEMBERLIST_VIEW = true -->
+<!-- ENDIF -->

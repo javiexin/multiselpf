@@ -1,0 +1,27 @@
+<!-- Team badge in viewtopic - Game Of Thrones House example -->
+<div class="house" style="display: none;">{postrow.PROFILE_JX_GOT_HOUSE_VALUE}</div>
+
+<!-- IF not $DEFINED_JXGOTHOUSE_VIEWTOPIC_BODY -->
+
+<style>
+.avatar-container {
+  padding-bottom: 16px;
+}
+.avatar-container .avatar {
+  position: relative;
+}
+.house {
+  position: absolute;
+  right: -16px;
+  bottom: -16px;
+}
+.house > img {
+  max-height: 32px;
+  width: auto;
+}
+</style>
+
+<!-- INCLUDEJS js/viewtopic_body.js -->
+
+<!-- DEFINE $DEFINED_JXGOTHOUSE_VIEWTOPIC_BODY = true -->
+<!-- ENDIF -->

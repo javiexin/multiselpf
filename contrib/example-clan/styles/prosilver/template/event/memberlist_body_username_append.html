@@ -1,0 +1,25 @@
+<!-- Team badge in memberlist - Game Of Thrones House example -->
+<div class="house" style="display: none;">{memberrow.PROFILE_JX_GOT_HOUSE_VALUE}</div>
+
+<!-- IF not $DEFINED_JXGOTHOUSE_MEMBERLIST_BODY -->
+
+<style>
+.house > img {
+  max-height: 32px;
+  width: auto;
+}
+.house {
+  float: right;
+  padding-left: 10px;
+  display: inline-block;
+  margin-top: -8px;
+}
+table.table1 tbody td {
+    padding-top: 15px;
+}
+</style>
+
+<!-- INCLUDEJS js/memberlist_body.js -->
+
+<!-- DEFINE $DEFINED_JXGOTHOUSE_MEMBERLIST_BODY = true -->
+<!-- ENDIF -->
