@@ -1,0 +1,7 @@
+<!-- BEGIN imgupl -->
+<!-- IF imgupl.FIELD_DISPLAY -->
+	{imgupl.FIELD_DISPLAY}<br/>
+	<!-- IF not imgupl.FIELD_REQUIRED --><label for="{imgupl.FIELD_IDENT}_delete"><input type="checkbox" name="{imgupl.FIELD_IDENT}_delete" id="{imgupl.FIELD_IDENT}_delete" value="1" />&nbsp;{L_DELETE_IMGUPL}</label><br/><!-- ENDIF -->
+<!-- ENDIF -->
+	<input type="hidden" name="MAX_FILE_SIZE" value="{imgupl.FIELD_LENGTH}" /><!-- IF imgupl.FIELD_VALUE --><input type="hidden" name="{imgupl.FIELD_IDENT}_raw" value="{imgupl.FIELD_VALUE}" /><!-- ENDIF --><input type="file" name="{imgupl.FIELD_IDENT}" id="{imgupl.FIELD_IDENT}" class="inputbox autowidth" />
+<!-- END imgupl -->

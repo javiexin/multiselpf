@@ -1,11 +1,11 @@
 {
-	"name": "javiexin/multiselpf",
+	"name": "javiexin/advancedpf",
 	"type": "phpbb-extension",
-	"description": "Adds a new type of Profile Fields, where multiple options may be selected.",
+	"description": "Adds a set of new Profile Field types, and other improvements to Profile Fields.",
 	"homepage": "http://www.exincastillos.es/jxmods",
-	"version": "0.0.3",
-	"time": "2015-05-27",
-	"keywords": ["phpbb", "extension", "multiselpf", "multi", "selection", "profile", "field"],
+	"version": "0.1.0",
+	"time": "2015-07-17",
+	"keywords": ["phpbb", "extension", "advancedpf", "profile", "field", "multi", "selection", "image", "upload"],
 	"license": "GPL-2.0",
 	"authors": [
 		{
@@ -18,9 +18,9 @@
 		"php": ">=5.3.3"
 	},
 	"extra": {
-		"display-name": "Multi Selection Profile Fields",
+		"display-name": "Advanced Profile Fields Pack",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.3,<3.2.*@dev"
+			"phpbb/phpbb": ">=3.1.6,<3.2.*@dev"
 		}
 	}
 }

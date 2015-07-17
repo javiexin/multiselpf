@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * Multi Selection Profile Field
+ * Advanced Profile Fields Pack - Multiple Selection PF
  *
  * @copyright (c) 2015 javiexin ( www.exincastillos.es )
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  * @author Javier Lopez (javiexin)
  */
 
-namespace javiexin\multiselpf\profilefields\type;
+namespace javiexin\advancedpf\profilefields\type;
 
 define('FIELD_SEPARATOR', ';');
 
@@ -75,7 +75,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	*/
 	public function get_service_name()
 	{
-		return 'javiexin.multiselpf.profilefields.type.multisel';
+		return 'javiexin.advancedpf.profilefields.type.multisel';
 	}
 
 	/**
@@ -83,7 +83,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	*/
 	public function get_template_filename()
 	{
-		return '@javiexin_multiselpf/profilefields/' . $this->get_name_short() . '.html';
+		return '@javiexin_advancedpf/profilefields/' . $this->get_name_short() . '.html';
 	}
 
 	/**
@@ -343,10 +343,8 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	{
 		if ($step == 2 && in_array($key, array('field_novalue', 'field_default_value')))
 		{
-			// Read the array of options again
-			$current_value = ($this->request->is_set($key)) ? implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value)))) : '';
-			$field_data[$key] = $current_value;
-			return $current_value;
+			// Read the array of options again if set
+			return ($this->request->is_set($key)) ? implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value)))) : '';
 		}
 
 		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
@@ -375,7 +373,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	/**
 	* {@inheritDoc}
 	*/
-	public function display_options(&$template_vars, &$field_data)
+	public function display_options($action, &$field_data)
 	{
 		// Initialize these array elements if we are creating a new field
 		if (!sizeof($field_data['lang_options']))
@@ -384,12 +382,14 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			$field_data['lang_options'] = array();
 		}
 
-		$template_vars = array_merge($template_vars, array(
-			'S_DROPDOWN'					=> true, // workaround for lack of configurability of acp_profile.html
-			'S_MULTISEL'					=> true, // not used due to the above
-			'L_EDIT_DROPDOWN_LANG_EXPLAIN'	=> $this->user->lang['EDIT_MULTISEL_LANG_EXPLAIN'], // same workaround
-			'L_LANG_OPTIONS_EXPLAIN'		=> $this->user->lang['MULTISEL_ENTRIES_EXPLAIN'], // and more
-			'LANG_OPTIONS'					=> implode("\n", $field_data['lang_options']),
-		));
+		$doptions = array(
+			0 => array(
+					'TITLE' => $this->user->lang['ENTRIES'],
+					'EXPLAIN' => $this->user->lang[($action == 'edit') ? 'EDIT_MULTISEL_LANG_EXPLAIN' : 'MULTISEL_ENTRIES_EXPLAIN'],
+					'FIELD' => '<textarea id="lang_options" name="lang_options" rows="5" cols="80">' . implode("\n", $field_data['lang_options']) . '</textarea>'
+				),
+		);
+
+		return $doptions;
 	}
 }

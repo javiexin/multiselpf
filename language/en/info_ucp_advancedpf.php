@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Multi Selection Profile Field [Spanish]
+ * Advanced Profile Fields Pack [English]
  *
  * @copyright (c) 2015 javiexin ( www.exincastillos.es )
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -35,12 +35,19 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+// Multiple Selection
 	'FIELD_MULTISEL_TOO_FEW'		=> array(
-		1	=>	'No ha seleccionado suficientes opciones para el campo “%2$s”. Al menos debe seleccionar %1$d opción.',
-		2	=>	'No ha seleccionado suficientes opciones para el campo “%2$s”. Al menos debe seleccionar %1$d opciones.',
+		1	=>	'You have not selected enough options for field “%2$s”. At least %1$d option must be selected.',
+		2	=>	'You have not selected enough options for field “%2$s”. At least %1$d options must be selected.',
 	),
 	'FIELD_MULTISEL_TOO_MANY'		=> array(
-		1	=>	'Ha seleccionado demasiadas opciones para el campo “%2$s”. Debe seleccionar %1$d opción como máximo.',
-		2	=>	'Ha seleccionado demasiadas opciones para el campo “%2$s”. Debe seleccionar %1$d opciones como máximo.',
+		1	=>	'You have selected too many options on field “%2$s”. At most %1$d option may be selected.',
+		2	=>	'You have selected too many options on field “%2$s”. At most %1$d options may be selected.',
 	),
+
+// Image Selector
+	'NO_IMAGES_IMGSEL'				=> 'No images',
+
+// Image Upload
+	'DELETE_IMGUPL'					=> 'Delete image',
 ));

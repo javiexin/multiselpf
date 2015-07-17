@@ -1,0 +1,35 @@
+<!-- BEGIN imgsel -->
+	<!-- IF .imgsel.options -->
+		<!-- IF not imgsel.FIELD_LENGTH -->
+			<select name="{imgsel.FIELD_IDENT}" id="{imgsel.FIELD_IDENT}" data-togglable-settings="true">
+			<!-- IF not imgsel.FIELD_REQUIRED -->
+				<option value=""<!-- IF not imgsel.FIELD_VALUE --> selected="selected"<!-- ENDIF-->>{imgsel.LANG_DEFAULT_VALUE}</option>
+			<!-- ENDIF -->
+			<!-- BEGIN options -->
+				<option value="{imgsel.options.VALUE}"<!-- IF imgsel.options.S_CURRENT --> selected="selected"<!-- ENDIF--> data-toggle-setting="#{imgsel.FIELD_IDENT}_{imgsel.options.S_ROW_COUNT}">{imgsel.options.NAME}</option>
+			<!-- END options -->
+			</select>
+			<div style="padding: 10px;">
+			<!-- BEGIN options -->
+				<span id="{imgsel.FIELD_IDENT}_{imgsel.options.S_ROW_COUNT}">{imgsel.options.DISPLAY}</span>
+			<!-- END options -->
+			</div>
+		<!-- ELSE -->
+			<!-- IF not imgsel.FIELD_REQUIRED -->
+			<div>
+				<label for="{imgsel.FIELD_IDENT}_none"><input type="radio" name="{imgsel.FIELD_IDENT}" id="{imgsel.FIELD_IDENT}_none" value=""<!-- IF not imgsel.FIELD_VALUE --> checked="checked"<!-- ENDIF-->/>&nbsp;{imgsel.LANG_DEFAULT_VALUE}</label>
+			</div>
+			<!-- ENDIF -->
+			<ul id="gallery" style="list-style-type: none;">
+			<!-- BEGIN options -->
+				<li>
+					<label for="{imgsel.FIELD_IDENT}_{imgsel.options.S_ROW_COUNT}">{imgsel.options.DISPLAY}<br />
+					<input type="radio" name="{imgsel.FIELD_IDENT}" id="{imgsel.FIELD_IDENT}_{imgsel.options.S_ROW_COUNT}" value="{imgsel.options.VALUE}"<!-- IF imgsel.options.S_CURRENT --> checked="checked"<!-- ENDIF-->/></label>
+				</li>
+			<!-- END options -->
+			</ul>
+		<!-- ENDIF -->
+	<!-- ELSE -->
+		<p><strong>{L_NO_IMAGES_IMGSEL}</strong></p>
+	<!-- ENDIF -->
+<!-- END imgsel -->
