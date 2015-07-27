@@ -12,6 +12,7 @@ The list of modifications included here is the following:
 [*][url=https://github.com/phpbb/phpbb/pull/3733][ticket/13934] Add enctype clause for profile fields[/url]
 [*][url=https://github.com/phpbb/phpbb/pull/3724][ticket/13960] Profile field validation breaks ACP[/url]
 [*][url=https://github.com/phpbb/phpbb/pull/3739][ticket/13982] Add events around ranks[/url]
+[*][url=https://github.com/phpbb/phpbb/pull/3779][ticket/14037] Allows adapting memberlist profile fields headline[/url]
 
 To install, copy the CONTENTS of the "modified" folder to the root of your forum, overwritting the existing files.
 For your convenience, I have included here a fresh copy of the standard 3.1.5 files in the "phpbb-3.1.5" folder.
