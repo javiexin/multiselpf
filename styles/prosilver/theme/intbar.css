@@ -1,0 +1,84 @@
+/* CSS for the Bar Graph profile field */
+
+.intbar {
+	display: inline-block;
+	width: 100%;
+	min-width: 8px;
+	border: 1px solid transparent;
+	padding: 0px;
+	margin: 0px 2px;
+}
+
+.intbar span {
+	display: inline-block;
+	text-align: right;
+	font-weight: bold;
+}
+
+.intbar1, .intbar2, .intbar3, .intbar4, .intbar5 {
+	border-bottom: 1px solid transparent;
+	border-right: 1px solid transparent;
+}
+
+.rtl .intbar1, .rtl .intbar2, .rtl .intbar3, .rtl .intbar4, .rtl .intbar5 {
+	border-left: 1px solid transparent;
+	border-right: none;
+}
+
+.intbar{
+	border-color: black;
+}
+
+.intbar span{
+	color: white;
+}
+
+.intbar1 {
+	background-color: #AA2346;
+	border-bottom-color: #74162C;
+	border-right-color: #74162C;
+}
+
+.rtl .intbar1 {
+	border-left-color: #74162C;
+}
+
+.intbar2 {
+	background-color: #BE1E4A;
+	border-bottom-color: #8C1C38;
+	border-right-color: #8C1C38;
+}
+
+.rtl .intbar2 {
+	border-left-color: #8C1C38;
+}
+
+.intbar3 {
+	background-color: #D11A4E;
+	border-bottom-color: #AA2346;
+	border-right-color: #AA2346;
+}
+
+.rtl .intbar3 {
+	border-left-color: #AA2346;
+}
+
+.intbar4 {
+	background-color: #E41653;
+	border-bottom-color: #BE1E4A;
+	border-right-color: #BE1E4A;
+}
+
+.rtl .intbar4 {
+	border-left-color: #BE1E4A;
+}
+
+.intbar5 {
+	background-color: #F81157;
+	border-bottom-color: #D11A4E;
+	border-right-color: #D11A4E;
+}
+
+.rtl .intbar5 {
+	border-left-color: #D11A4E;
+}

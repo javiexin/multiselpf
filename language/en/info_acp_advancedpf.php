@@ -88,4 +88,10 @@ $lang = array_merge($lang, array(
 	'IMGUPL_MAX_SIZE_EXPLAIN'		=> 'Maximum widht and height of uploaded images, in pixels.',
 	'IMGUPL_MAX_LOWER_MIN'			=> 'Inconsistent options: maximum dimension smaller than minimum dimension.',
 	'DELETE_IMGUPL'					=> 'Delete image',
+
+// Bar Graph
+	'FIELD_INTBAR'					=> 'Bar graph',
+	'INTBAR_MAX_LOWER_MIN'			=> 'Inconsistent options: maximum smaller than minimum.',
+	'INTBAR_NO_INTERVAL'			=> 'Inconsistent options: no interval.',
+	'INTBAR_DEFAULT_NOT_VALID'		=> 'Inconsistent options: default not within specified range.',
 ));

@@ -36,6 +36,15 @@ services:
         tags:
             - { name: profilefield.type }
 
+    javiexin.advancedpf.profilefields.type.intbar:
+        class: javiexin\advancedpf\profilefields\type\type_intbar
+        arguments:
+            - @request
+            - @template
+            - @user
+        tags:
+            - { name: profilefield.type }
+
     javiexn.advancedpf.listener:
         class: javiexin\advancedpf\event\listener
         arguments:
