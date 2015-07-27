@@ -60,6 +60,7 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.generate_profile_fields_template_data'	=> 'remove_individual_fields_from_block',
+			'core.generate_profile_fields_template_headlines'	=> 'remove_individual_fields_from_headlines',
 			'core.acp_profile_create_edit_init'				=> 'manage_additional_column_in_profilefields_init',
 			'core.acp_profile_create_edit_after'			=> 'manage_additional_column_in_profilefields_after',
 			'core.acp_profile_create_edit_before_save'		=> 'manage_additional_column_in_profilefields_save',
@@ -92,6 +93,31 @@ class listener implements EventSubscriberInterface
 		$tpl_fields['blockrow'] = $new_blockrow;
 
 		$event['tpl_fields'] = $tpl_fields;
+	}
+
+	/**
+	 * Removes profile fields classified as individual from profile fields headlines
+	 *
+	 * @param object $event The event object
+	 * @return void
+	 */
+	public function remove_individual_fields_from_headlines($event)
+	{
+		$profile_cache = $event['profile_cache'];
+		$tpl_fields = $event['tpl_fields'];
+
+		$new_tpl_fields = array();
+		foreach ($tpl_fields as $field_block)
+		{
+			$ident = $field_block['PROFILE_FIELD_IDENT'];
+			if ($profile_cache[$ident]['field_individual'])
+			{
+				continue;
+			}
+			$new_tpl_fields[] = $field_block;
+		}
+
+		$event['tpl_fields'] = $new_tpl_fields;
 	}
 
 	/**
