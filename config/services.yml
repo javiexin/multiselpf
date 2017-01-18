@@ -5,44 +5,44 @@ services:
     javiexin.advancedpf.profilefields.type.multisel:
         class: javiexin\advancedpf\profilefields\type\type_multisel
         arguments:
-            - @profilefields.lang_helper
-            - @request
-            - @template
-            - @user
+            - '@profilefields.lang_helper'
+            - '@request'
+            - '@template'
+            - '@user'
         tags:
             - { name: profilefield.type }
 
     javiexin.advancedpf.profilefields.type.imgsel:
         class: javiexin\advancedpf\profilefields\type\type_imgsel
         arguments:
-            - @request
-            - @template
-            - @user
-            - %core.root_path%
-            - %core.php_ext%
-            - @path_helper
+            - '@request'
+            - '@template'
+            - '@user'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@path_helper'
         tags:
             - { name: profilefield.type }
 
     javiexin.advancedpf.profilefields.type.imgupl:
         class: javiexin\advancedpf\profilefields\type\type_imgupl
         arguments:
-            - @request
-            - @template
-            - @user
-            - %core.root_path%
-            - %core.php_ext%
-            - @path_helper
+            - '@request'
+            - '@template'
+            - '@user'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@path_helper'
         tags:
             - { name: profilefield.type }
 
-    javiexn.advancedpf.listener:
+    javiexin.advancedpf.listener:
         class: javiexin\advancedpf\event\listener
         arguments:
-            - @template
-            - @user
-            - @ext.manager
-            - %core.php_ext%
-            - %javiexin.advancedpf.pf_prefix%
+            - '@template'
+            - '@user'
+            - '@ext.manager'
+            - '%core.php_ext%'
+            - '%javiexin.advancedpf.pf_prefix%'
         tags:
             - { name: event.listener }

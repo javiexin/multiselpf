@@ -1,0 +1,18 @@
+		<!-- IF S_MULTISEL -->
+			<dl>
+				<dt><label for="lang_options">{L_ENTRIES}{L_COLON}</label>
+					<!-- IF S_EDIT_MODE -->
+						<br /><span>{L_EDIT_MULTISEL_LANG_EXPLAIN}</span>
+					<!-- ELSE -->
+						<br /><span>{L_MULTISEL_ENTRIES_EXPLAIN}</span>
+					<!-- ENDIF -->
+				</dt>
+				<dd><textarea id="lang_options" name="lang_options" rows="5" cols="80">{LANG_OPTIONS}</textarea></dd>
+			</dl>
+		<!-- ENDIF -->
+		<!-- IF S_IMAGE -->
+			<dl>
+				<dt><label for="lang_notspecified_value">{L_NOTSPECIFIED_VALUE}{L_COLON}</label><br /><span>{L_NOTSPECIFIED_VALUE_EXPLAIN}</span></dt>
+				<dd><input class="text medium" type="text" id="lang_notspecified_value" name="lang_notspecified_value" value="{LANG_NOTSPECIFIED_VALUE}" /></dd>
+			</dl>
+		<!-- ENDIF -->

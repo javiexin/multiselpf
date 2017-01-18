@@ -276,17 +276,12 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 	/**
 	* {@inheritDoc}
 	*/
-	public function display_options($action, &$field_data)
+	public function display_options(&$template_vars, &$field_data)
 	{
-		$doptions = array(
-			0 => array(
-					'TITLE' => $this->user->lang['NOTSPECIFIED_VALUE'],
-					'EXPLAIN' => $this->user->lang['NOTSPECIFIED_VALUE_EXPLAIN'],
-					'FIELD' => '<input class="text medium" type="text" id="lang_default_value" name="lang_default_value" value="' . $field_data['lang_default_value'] . '" />'
-				),
-		);
-
-		return $doptions;
+		$template_vars = array_merge($template_vars, array(
+			'S_IMAGE'					=> true,
+			'LANG_NOTSPECIFIED_VALUE'	=> $field_data['lang_default_value'],
+		));
 	}
 
 	/**

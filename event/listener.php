@@ -36,10 +36,10 @@ class listener implements EventSubscriberInterface
 	 * Constructor of event listener
 	 *
 	 * @param \phpbb\template\template						$template			Template object
-	 * @param \phpbb\template\template						$template			Template object
-	 * @param \phpbb\template\template						$template			Template object
-	 * @param \phpbb\template\template						$template			Template object
-	 * @param \phpbb\template\template						$template			Template object
+	 * @param \phpbb\user									$user				User object
+	 * @param \phpbb\extension\manager						$ext_manager		Extension manager object
+	 * @param string										$php_ext			PHP extension
+	 * @param string										$pf_prefix			Profile fields prefix
 	 */
 	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\extension\manager $ext_manager, $php_ext, $pf_prefix)
 	{
@@ -59,14 +59,39 @@ class listener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
+			'core.user_setup' => 'load_language_on_setup',
 			'core.generate_profile_fields_template_data'	=> 'remove_individual_fields_from_block',
 			'core.generate_profile_fields_template_headlines'	=> 'remove_individual_fields_from_headlines',
 			'core.acp_profile_create_edit_init'				=> 'manage_additional_column_in_profilefields_init',
 			'core.acp_profile_create_edit_after'			=> 'manage_additional_column_in_profilefields_after',
-			'core.acp_profile_create_edit_before_save'		=> 'manage_additional_column_in_profilefields_save',
-
-			'core.user_setup' => 'load_language_on_setup',
+			'core.acp_profile_create_edit_save_before'		=> 'manage_additional_column_in_profilefields_save',
 		);
+	}
+
+	/**
+	 * Load common language files during user setup
+	 *
+	 * @param object $event The event object
+	 * @return void
+	 */
+	public function load_language_on_setup($event)
+	{
+		// Find pf language files if any
+		$pf_lang_files = $this->finder
+			->set_extensions(array('javiexin\advancedpf'))
+			->prefix($this->pf_prefix)
+			->suffix('.' . $this->php_ext)
+			->extension_directory('/language/' . $this->user->lang_name)
+			->find();
+
+		$lang_set = ($pf_lang_files) ? substr_replace(array_map('basename', array_unique(array_keys($pf_lang_files))), '', -strlen($this->php_ext)-1) : array();
+
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name' => 'javiexin\advancedpf',
+			'lang_set' => $lang_set,
+		);
+		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	/**
@@ -175,31 +200,5 @@ class listener implements EventSubscriberInterface
 		$profile_fields['field_individual'] = $field_data['field_individual'];
 
 		$event['profile_fields'] = $profile_fields;
-	}
-
-	/**
-	 * Load common language files during user setup
-	 *
-	 * @param object $event The event object
-	 * @return void
-	 */
-	public function load_language_on_setup($event)
-	{
-		// Find pf language files if any
-		$pf_lang_files = $this->finder
-			->set_extensions(array('javiexin\advancedpf'))
-			->prefix($this->pf_prefix)
-			->suffix('.' . $this->php_ext)
-			->extension_directory('/language/' . $this->user->lang_name)
-			->find();
-
-		$lang_set = ($pf_lang_files) ? substr_replace(array_map('basename', array_unique(array_keys($pf_lang_files))), '', -strlen($this->php_ext)-1) : array();
-
-		$lang_set_ext = $event['lang_set_ext'];
-		$lang_set_ext[] = array(
-			'ext_name' => 'javiexin\advancedpf',
-			'lang_set' => $lang_set,
-		);
-		$event['lang_set_ext'] = $lang_set_ext;
 	}
 }

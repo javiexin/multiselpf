@@ -373,7 +373,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	/**
 	* {@inheritDoc}
 	*/
-	public function display_options($action, &$field_data)
+	public function display_options(&$template_vars, &$field_data)
 	{
 		// Initialize these array elements if we are creating a new field
 		if (!sizeof($field_data['lang_options']))
@@ -382,14 +382,9 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			$field_data['lang_options'] = array();
 		}
 
-		$doptions = array(
-			0 => array(
-					'TITLE' => $this->user->lang['ENTRIES'],
-					'EXPLAIN' => $this->user->lang[($action == 'edit') ? 'EDIT_MULTISEL_LANG_EXPLAIN' : 'MULTISEL_ENTRIES_EXPLAIN'],
-					'FIELD' => '<textarea id="lang_options" name="lang_options" rows="5" cols="80">' . implode("\n", $field_data['lang_options']) . '</textarea>'
-				),
-		);
-
-		return $doptions;
+		$template_vars = array_merge($template_vars, array(
+			'S_MULTISEL'				=> true,
+			'LANG_OPTIONS'				=> implode("\n", $field_data['lang_options']),
+		));
 	}
 }
