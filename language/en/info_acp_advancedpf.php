@@ -58,8 +58,8 @@ $lang = array_merge($lang, array(
 	),
 
 // Image Common
-	'NOTSPECIFIED_VALUE'			=> 'Not specified value',
-	'NOTSPECIFIED_VALUE_EXPLAIN'	=> 'Value shown when no value has been specified; select this to delete current field value.',
+	'NOTSPECIFIED_VALUE'			=> 'No value specified',
+	'NOTSPECIFIED_VALUE_EXPLAIN'	=> 'Label shown when no image value has been specified (may be empty); select this label to delete current field value.',
 	'IMG_NO_PATH'					=> 'No image path specified',
 	'IMG_PATH_INCORRECT'			=> 'The specified path is incorrect',
 	'IMG_DIR_DOES_NOT_EXIST'		=> 'The entered path “%s” does not exist.',
