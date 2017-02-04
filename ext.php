@@ -37,6 +37,18 @@ class ext extends \phpbb\extension\base
 	protected $config_text;
 
 	/**
+	* Log object
+	* @var \phpbb\log\log_interface
+	*/
+	protected $log;
+
+	/**
+	* User object
+	* @var \phpbb\user
+	*/
+	protected $user;
+
+	/**
 	* Overwrite enable_step to enable advanced profile fields
 	* that were disabled before.
 	*
@@ -142,6 +154,8 @@ class ext extends \phpbb\extension\base
 			$this->db = $this->container->get('dbal.conn');
 			$this->db_tools = $this->container->get('dbal.tools');
 			$this->config_text = $this->container->get('config_text');
+			$this->log = $this->container->get('log');
+			$this->user = $this->container->get('user');
 		}
 	}
 
@@ -188,7 +202,7 @@ class ext extends \phpbb\extension\base
 		// Log activity
 		foreach ($pfs as $field_ident)
 		{
-			add_log('admin', 'LOG_PROFILE_FIELD_DEACTIVATE', $field_ident);
+			$this->log->add('admin', $this->user->data['user_id'], (empty($this->user->ip)) ? '' : $this->user->ip, 'LOG_PROFILE_FIELD_DEACTIVATE', time(), array($field_ident));
 		}
 	}
 
@@ -263,7 +277,7 @@ class ext extends \phpbb\extension\base
 		// Log activity
 		foreach ($pfs as $field_ident)
 		{
-			add_log('admin', 'LOG_PROFILE_FIELD_REMOVED', $field_ident);
+			$this->log->add('admin', $this->user->data['user_id'], (empty($this->user->ip)) ? '' : $this->user->ip, 'LOG_PROFILE_FIELD_REMOVED', time(), array($field_ident));
 		}
 	}
 
@@ -302,7 +316,7 @@ class ext extends \phpbb\extension\base
 		// Log activity
 		foreach ($pfs as $field_ident)
 		{
-			add_log('admin', 'LOG_PROFILE_FIELD_ACTIVATE', $field_ident);
+			$this->log->add('admin', $this->user->data['user_id'], (empty($this->user->ip)) ? '' : $this->user->ip, 'LOG_PROFILE_FIELD_ACTIVATE', time(), array($field_ident));
 		}
 	}
 
