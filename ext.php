@@ -13,6 +13,12 @@ namespace javiexin\advancedpf;
 class ext extends \phpbb\extension\base
 {
 	/**
+	* Profile fields manager
+	* @var \phpbb\profilefields\manager
+	*/
+	protected $pfmgr;
+
+	/**
 	* Database object
 	* @var \phpbb\db\driver\driver_interface
 	*/
@@ -45,9 +51,9 @@ class ext extends \phpbb\extension\base
 
 				// Enable advanced profile fields
 				$this->get_global_services();
-				$this->enable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
-				$this->enable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
-				$this->enable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
+				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
+				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
 				return 'profilefields';
 
 			break;
@@ -76,9 +82,9 @@ class ext extends \phpbb\extension\base
 
 				// Disable advanced profile fields
 				$this->get_global_services();
-				$this->disable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
-				$this->disable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
-				$this->disable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
+				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
+				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
 				return 'profilefields';
 
 			break;
@@ -107,9 +113,9 @@ class ext extends \phpbb\extension\base
 
 				// Purge advanced profile fields
 				$this->get_global_services();
-				$this->purge_profilefields('javiexin.advancedpf.profilefields.type.multisel');
-				$this->purge_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
-				$this->purge_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.multisel');
+				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
+				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
 				return 'profilefields';
 
 			break;
@@ -128,9 +134,15 @@ class ext extends \phpbb\extension\base
 	*/
 	protected function get_global_services()
 	{
-		$this->db = $this->container->get('dbal.conn');
-		$this->db_tools = $this->container->get('dbal.tools');
-		$this->config_text = $this->container->get('config_text');
+		$this->pfmgr = $this->container->get('profilefields.manager');
+		// If core change has not been merged, we use code here; otherwise, we use the core code
+		if (!method_exists($this->pfmgr, 'enable_profilefields'))
+		{
+			$this->pfmgr = $this;
+			$this->db = $this->container->get('dbal.conn');
+			$this->db_tools = $this->container->get('dbal.tools');
+			$this->config_text = $this->container->get('config_text');
+		}
 	}
 
 	/**
