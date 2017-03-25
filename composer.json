@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Adds a set of new Profile Field types, and other improvements to Profile Fields.",
 	"homepage": "http://www.exincastillos.es/jxmods",
-	"version": "0.1.0",
-	"time": "2015-07-17",
+	"version": "1.0.0",
+	"time": "2017-01-17",
 	"keywords": ["phpbb", "extension", "advancedpf", "profile", "field", "multi", "selection", "image", "upload"],
 	"license": "GPL-2.0",
 	"authors": [
@@ -20,7 +20,7 @@
 	"extra": {
 		"display-name": "Advanced Profile Fields Pack",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.6,<3.2.*@dev"
+			"phpbb/phpbb": "~3.1.11||~3.2.0"
 		}
 	}
 }

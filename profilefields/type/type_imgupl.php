@@ -159,6 +159,17 @@ class type_imgupl extends type_img_base
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function display_options(&$template_vars, &$field_data)
+	{
+		parent::display_options($template_vars, $field_data);
+		$template_vars = array_merge($template_vars, array(
+			'S_IMAGE_UPLOAD'			=> true,
+		));
+	}
+
+	/**
 	* Check if a directory is writable
 	* @param string $path Directory to check
 	* @return bool

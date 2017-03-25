@@ -59,7 +59,7 @@ $lang = array_merge($lang, array(
 
 // Image Common
 	'NOTSPECIFIED_VALUE'			=> 'Valor no especificado',
-	'NOTSPECIFIED_VALUE_EXPLAIN'	=> 'Valor que se muestra cuando no se ha especificado ningún valor; seleccione esta opción para borrar el valor actual.',
+	'NOTSPECIFIED_VALUE_EXPLAIN'	=> 'Literal que se muestra cuando no se ha especificado ningún valor (puede estar vacío); seleccione esta opción para borrar el valor actual.',
 	'IMG_NO_PATH'					=> 'No se ha especificado una ruta para las imágenes',
 	'IMG_PATH_INCORRECT'			=> 'La ruta introducida es incorrecta',
 	'IMG_DIR_DOES_NOT_EXIST'		=> 'La ruta introducida "%s" no existe.',
