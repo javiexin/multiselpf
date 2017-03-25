@@ -10,10 +10,10 @@
 
 namespace javiexin\advancedpf\profilefields\type;
 
-define('FIELD_SEPARATOR', ';');
-
 class type_multisel extends \phpbb\profilefields\type\type_base
 {
+	const FIELD_SEPARATOR = ';';
+
 	/**
 	* Profile fields language helper
 	* @var \phpbb\profilefields\lang_helper
@@ -149,7 +149,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	public function get_profile_field($profile_row)
 	{
 		$var_name = 'pf_' . $profile_row['field_ident'];
-		return implode(FIELD_SEPARATOR, $this->request->variable($var_name, explode(FIELD_SEPARATOR, $profile_row['field_default_value'])));
+		return implode(self::FIELD_SEPARATOR, $this->request->variable($var_name, explode(self::FIELD_SEPARATOR, $profile_row['field_default_value'])));
 	}
 
 	/**
@@ -157,7 +157,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	*/
 	public function validate_profile_field(&$field_value, $field_data)
 	{
-		$field_value_array = empty($field_value) ? array() : explode(FIELD_SEPARATOR, $field_value);
+		$field_value_array = empty($field_value) ? array() : explode(self::FIELD_SEPARATOR, $field_value);
 		$field_size = (int) sizeof($field_value_array);
 
 		if ($field_data['field_required'] && $field_data['field_minlen'] && $field_size < $field_data['field_minlen'])
@@ -214,7 +214,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			return '';
 		}
 
-		$field_value_array = explode(FIELD_SEPARATOR, $field_value);
+		$field_value_array = explode(self::FIELD_SEPARATOR, $field_value);
 		$field_value_display = '';
 
 		foreach ($field_value_array as $field_value_item)
@@ -253,8 +253,8 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 	{
 		$profile_row['field_ident'] = (isset($profile_row['var_name'])) ? $profile_row['var_name'] : 'pf_' . $profile_row['field_ident'];
 		$field_ident = $profile_row['field_ident'];
-		$default_value = array_map('intval', explode(FIELD_SEPARATOR, $profile_row['field_default_value']));
-		$user_field_value =	isset($this->user->profile_fields[$field_ident]) ? array_map('intval', explode(FIELD_SEPARATOR, $this->user->profile_fields[$field_ident])) : array(0);
+		$default_value = array_map('intval', explode(self::FIELD_SEPARATOR, $profile_row['field_default_value']));
+		$user_field_value =	isset($this->user->profile_fields[$field_ident]) ? array_map('intval', explode(self::FIELD_SEPARATOR, $this->user->profile_fields[$field_ident])) : array(0);
 
 		$value = ($this->request->is_set($field_ident)) ? $this->request->variable($field_ident, $default_value) : ((!isset($this->user->profile_fields[$field_ident]) || $preview_options !== false) ? $default_value : $user_field_value);
 
@@ -344,7 +344,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		if ($step == 2 && in_array($key, array('field_novalue', 'field_default_value')))
 		{
 			// Read the array of options again if set
-			return ($this->request->is_set($key)) ? implode(FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(FIELD_SEPARATOR, $current_value)))) : '';
+			return ($this->request->is_set($key)) ? implode(self::FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(self::FIELD_SEPARATOR, $current_value)))) : '';
 		}
 
 		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);

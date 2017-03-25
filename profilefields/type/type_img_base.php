@@ -375,7 +375,7 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 		}
 		if ($step == 2 && $key == 'field_novalue' && $this->request->is_set('field_default_value'))
 		{
-			return utf8_normalize_nfc(request_var('field_default_value', '', true));
+			return utf8_normalize_nfc($this->request->variable('field_default_value', '', true));
 		}
 
 		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
