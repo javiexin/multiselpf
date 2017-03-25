@@ -39,9 +39,9 @@ services:
     javiexin.advancedpf.profilefields.type.intbar:
         class: javiexin\advancedpf\profilefields\type\type_intbar
         arguments:
-            - @request
-            - @template
-            - @user
+            - '@request'
+            - '@template'
+            - '@user'
         tags:
             - { name: profilefield.type }
 
