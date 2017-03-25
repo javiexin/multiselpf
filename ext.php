@@ -66,6 +66,7 @@ class ext extends \phpbb\extension\base
 				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
 				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
 				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->enable_profilefields('javiexin.advancedpf.profilefields.type.intbar');
 				return 'profilefields';
 
 			break;
@@ -97,6 +98,7 @@ class ext extends \phpbb\extension\base
 				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.multisel');
 				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
 				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->disable_profilefields('javiexin.advancedpf.profilefields.type.intbar');
 				return 'profilefields';
 
 			break;
@@ -128,6 +130,7 @@ class ext extends \phpbb\extension\base
 				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.multisel');
 				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.imgsel');
 				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.imgupl');
+				$this->pfmgr->purge_profilefields('javiexin.advancedpf.profilefields.type.intbar');
 				return 'profilefields';
 
 			break;

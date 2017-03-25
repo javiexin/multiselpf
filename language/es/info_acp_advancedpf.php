@@ -88,4 +88,10 @@ $lang = array_merge($lang, array(
 	'IMGUPL_MAX_SIZE_EXPLAIN'		=> 'Anchura y altura máxima para las imágenes cargadas, en pixeles.',
 	'IMGUPL_MAX_LOWER_MIN'			=> 'Opciones no coherentes: dimensión máxima menor que dimensión mínima.',
 	'DELETE_IMGUPL'					=> 'Eliminar imágen',
+
+// Bar Graph
+	'FIELD_INTBAR'					=> 'Gráfico de barras',
+	'INTBAR_MAX_LOWER_MIN'			=> 'Opciones no coherentes: máximo menor que mínimo.',
+	'INTBAR_NO_INTERVAL'			=> 'Opciones no coherentes: no hay intervalo.',
+	'INTBAR_DEFAULT_NOT_VALID'		=> 'Opciones no coherentes: valor por defecto fuera del rango especificado.',
 ));
