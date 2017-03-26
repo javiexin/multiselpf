@@ -319,5 +319,4 @@ class ext extends \phpbb\extension\base
 			$this->log->add('admin', $this->user->data['user_id'], (empty($this->user->ip)) ? '' : $this->user->ip, 'LOG_PROFILE_FIELD_ACTIVATE', time(), array($field_ident));
 		}
 	}
-
 }

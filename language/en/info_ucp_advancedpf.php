@@ -50,4 +50,5 @@ $lang = array_merge($lang, array(
 
 // Image Upload
 	'DELETE_IMGUPL'					=> 'Delete image',
+
 ));

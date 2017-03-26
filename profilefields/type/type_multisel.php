@@ -3,7 +3,7 @@
  *
  * Advanced Profile Fields Pack - Multiple Selection PF
  *
- * @copyright (c) 2015 javiexin ( www.exincastillos.es )
+ * @copyright (c) 2015-2017 javiexin ( www.exincastillos.es )
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  * @author Javier Lopez (javiexin)
  */

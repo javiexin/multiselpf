@@ -1,6 +1,7 @@
 imports:
     - { resource: pfprefix.yml }
 
+# New Profile Field types
 services:
     javiexin.advancedpf.profilefields.type.multisel:
         class: javiexin\advancedpf\profilefields\type\type_multisel
@@ -36,6 +37,7 @@ services:
         tags:
             - { name: profilefield.type }
 
+# Extension Listener
     javiexin.advancedpf.listener:
         class: javiexin\advancedpf\event\listener
         arguments:

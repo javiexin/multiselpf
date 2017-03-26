@@ -88,4 +88,5 @@ $lang = array_merge($lang, array(
 	'IMGUPL_MAX_SIZE_EXPLAIN'		=> 'Maximum widht and height of uploaded images, in pixels.',
 	'IMGUPL_MAX_LOWER_MIN'			=> 'Inconsistent options: maximum dimension smaller than minimum dimension.',
 	'DELETE_IMGUPL'					=> 'Delete image',
+
 ));

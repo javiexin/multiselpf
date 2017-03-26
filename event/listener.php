@@ -35,11 +35,11 @@ class listener implements EventSubscriberInterface
 	/**
 	 * Constructor of event listener
 	 *
-	 * @param \phpbb\template\template						$template			Template object
-	 * @param \phpbb\user									$user				User object
-	 * @param \phpbb\extension\manager						$ext_manager		Extension manager object
-	 * @param string										$php_ext			PHP extension
-	 * @param string										$pf_prefix			Profile fields prefix
+	 * @param \phpbb\template\template			$template			Template object
+	 * @param \phpbb\user						$user				User object
+	 * @param \phpbb\extension\manager			$ext_manager		Extension manager object
+	 * @param string							$php_ext			PHP extension
+	 * @param string							$pf_prefix			Profile fields prefix
 	 */
 	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\extension\manager $ext_manager, $php_ext, $pf_prefix)
 	{

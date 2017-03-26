@@ -1,2 +1,3 @@
 parameters:
+    # Prefix used by contrib extension add ons
     javiexin.advancedpf.pf_prefix: jxpf_

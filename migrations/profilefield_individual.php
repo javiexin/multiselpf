@@ -29,7 +29,7 @@ class profilefield_individual extends \phpbb\db\migration\migration
 		return array(
 			'add_columns'	=> array(
 				$this->table_prefix . 'profile_fields'	=> array(
-					'field_individual'			=> array('BOOL', 0, 'after' => 'field_show_on_ml'),
+					'field_individual' => array('BOOL', 0, 'after' => 'field_show_on_ml'),
 				),
 			),
 		);
