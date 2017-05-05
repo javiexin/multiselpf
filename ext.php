@@ -26,7 +26,7 @@ class ext extends \phpbb\extension\base
 
 	/**
 	* Database tools object
-	* @var \phpbb\db\tools
+	* @var \phpbb\db\tools\tools
 	*/
 	protected $db_tools;
 

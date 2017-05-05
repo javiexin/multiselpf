@@ -72,16 +72,6 @@ class type_imgupl extends type_img_base
 	{
 		$var_name = 'pf_' . $profile_row['field_ident'];
 
-		list($img_min_width, $img_min_height) = array_map('intval', explode('|', $profile_row['field_minlen']));
-		list($img_max_width, $img_max_height) = array_map('intval', explode('|', $profile_row['field_maxlen']));
-		$img_max_filesize = (int) $profile_row['field_length'];
-
-		if (!class_exists('fileupload'))
-		{
-			include($this->phpbb_root_path . 'includes/functions_upload.' . $this->php_ext);
-		}
-		$upload = new \fileupload('', $this->allowed_extensions, $img_max_filesize, $img_min_width, $img_min_height, $img_max_width, $img_max_height);
-
 		$upload_file = $this->request->file($var_name);
 		$field_value = $this->request->variable($var_name . '_raw', $profile_row['field_default_value'], true);
 
@@ -92,7 +82,7 @@ class type_imgupl extends type_img_base
 
 		if (!empty($upload_file['name']))
 		{
-			$file = $upload->form_upload($var_name);
+			$file = ($this->is_version_32) ? $this->upload_file_32($profile_row) : $this->upload_file_31($profile_row);
 
 			$file->clean_filename('avatar', $var_name . '_', (isset($profile_row['var_name'])) ? $profile_row['var_name'] : $this->user->data['user_id']);
 
@@ -131,6 +121,55 @@ class type_imgupl extends type_img_base
 		}
 
 		return isset($new_field_value) ? $new_field_value : $field_value;
+	}
+
+	/**
+	* Upload a file with the 3.1 fileupload class
+	* @param array $profile_row Profile field data
+	* @return filespec
+	*/
+	protected function upload_file_31($profile_row)
+	{
+		$var_name = 'pf_' . $profile_row['field_ident'];
+
+		list($img_min_width, $img_min_height) = array_map('intval', explode('|', $profile_row['field_minlen']));
+		list($img_max_width, $img_max_height) = array_map('intval', explode('|', $profile_row['field_maxlen']));
+		$img_max_filesize = (int) $profile_row['field_length'];
+
+		if (!class_exists('fileupload'))
+		{
+			include($this->phpbb_root_path . 'includes/functions_upload.' . $this->php_ext);
+		}
+		$upload = new \fileupload('', $this->allowed_extensions, $img_max_filesize, $img_min_width, $img_min_height, $img_max_width, $img_max_height);
+
+		return $upload->form_upload($var_name);
+	}
+
+	/**
+	* Upload a file with the 3.2 \phpbb\files\upload class
+	* @param array $profile_row Profile field data
+	* @return \phpbb\files\filespec
+	*/
+	protected function upload_file_32($profile_row)
+	{
+		$var_name = 'pf_' . $profile_row['field_ident'];
+
+		list($img_min_width, $img_min_height) = array_map('intval', explode('|', $profile_row['field_minlen']));
+		list($img_max_width, $img_max_height) = array_map('intval', explode('|', $profile_row['field_maxlen']));
+		$img_max_filesize = (int) $profile_row['field_length'];
+
+		/** @var \phpbb\files\upload $upload */
+		$upload = $this->files_factory->get('upload')
+			->set_error_prefix('')
+			->set_allowed_extensions($this->allowed_extensions)
+			->set_max_filesize($img_max_filesize)
+			->set_allowed_dimensions(
+				$img_min_width,
+				$img_min_height,
+				$img_max_width,
+				$img_max_height);
+
+		return $upload->handle_upload('files.types.form', $var_name);
 	}
 
 	/**
@@ -180,9 +219,7 @@ class type_imgupl extends type_img_base
 	}
 
 	/**
-	* Get title to use when displaying image
-	* @param array $field_data Data for the field
-	* @return string Title for image
+	* {@inheritDoc}
 	*/
 	protected function field_title($field_data)
 	{

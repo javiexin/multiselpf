@@ -49,6 +49,12 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 	protected $path_helper;
 
 	/**
+	* Files Factory
+	* @var \phpbb\files\factory
+	*/
+	protected $files_factory;
+
+	/**
 	* Array of allowed image extensions
 	* @var array
 	*/
@@ -78,6 +84,12 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 	protected $error = array();	
 
 	/**
+	* Phpbb switch to keep compatibility across versions
+	* @var boolean
+	*/
+	protected $is_version_32;
+
+	/**
 	* Construct
 	*
 	* @param	\phpbb\request\request				$request			Request object
@@ -86,8 +98,9 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 	* @param	string								$phpbb_root_path	Path to the phpBB root
 	* @param	string								$php_ext			PHP file extension
 	* @param	\phpbb\path_helper					$path_helper		phpBB path helper
+	* @param	\phpbb\files\factory				$files_factory		phpBB files factory (optional, 3.2 only)
 	*/
-	public function __construct(\phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext, \phpbb\path_helper $path_helper)
+	public function __construct(\phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext, \phpbb\path_helper $path_helper, \phpbb\files\factory $files_factory = null)
 	{
 		$this->request = $request;
 		$this->template = $template;
@@ -95,6 +108,8 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->path_helper = $path_helper;
+		$this->files_factory = $files_factory;
+		$this->is_version_32 = phpbb_version_compare(PHPBB_VERSION, '3.2.0', '>=');
 	}
 
 	/**
@@ -316,7 +331,7 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 	{
 		if ($step == 2 && $key == 'field_validation' && $this->request->is_set('field_storage_path'))
 		{
-			$storage_path = utf8_normalize_nfc($this->request->variable('field_storage_path', $current_value, true));
+			$storage_path = $this->request->variable('field_storage_path', $current_value, true);
 
 			// No directory specified
 			if (!$storage_path && !$current_value)
@@ -375,7 +390,7 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 		}
 		if ($step == 2 && $key == 'field_novalue' && $this->request->is_set('field_default_value'))
 		{
-			return utf8_normalize_nfc($this->request->variable('field_default_value', '', true));
+			return $this->request->variable('field_default_value', '', true);
 		}
 
 		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
@@ -399,6 +414,16 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 			}
 		}
 		return parent::prepare_hidden_fields($step, $key, $action, $field_data);
+	}
+
+	/**
+	* Get title to use when displaying image
+	* @param array $field_data Data for the field
+	* @return string Title for image, empty to calculate based on filename
+	*/
+	protected function field_title($field_data)
+	{
+		return '';
 	}
 
 	/**

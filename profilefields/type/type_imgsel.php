@@ -112,16 +112,6 @@ class type_imgsel extends type_img_base
 	}
 
 	/**
-	* Get title to use when displaying image
-	* @param array $field_data Data for the field
-	* @return string Title for image, empty to calculate based on filename
-	*/
-	protected function field_title($field_data)
-	{
-		return '';
-	}
-
-	/**
 	* List of images in configured directory
 	* @var mixed Array of images per directory
 	*/
