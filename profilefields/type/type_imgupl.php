@@ -209,6 +209,38 @@ class type_imgupl extends type_img_base
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function get_excluded_options($key, $action, $current_value, &$field_data, $step)
+	{
+		if ($step == 2 && in_array($key, array('field_minlen', 'field_maxlen')) && $this->request->is_set($key))
+		{
+			$as_array = $this->request->variable($key, array(0));
+			if (sizeof($as_array) > 1)
+			{
+				return implode('|', $as_array);
+			}
+		}
+		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function prepare_hidden_fields($step, $key, $action, &$field_data)
+	{
+		if (in_array($key, array('field_minlen', 'field_maxlen')))
+		{
+			$as_array = $this->request->variable($key, array(0));
+			if (sizeof($as_array) > 1)
+			{
+				return implode('|', $as_array);
+			}
+		}
+		return parent::prepare_hidden_fields($step, $key, $action, $field_data);
+	}
+
+	/**
 	* Check if a directory is writable
 	* @param string $path Directory to check
 	* @return bool

@@ -405,14 +405,6 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 		{
 			return $field_data[$key];
 		}
-		else if (in_array($key, array('field_minlen', 'field_maxlen')))
-		{
-			$as_array = $this->request->variable($key, array(0));
-			if (sizeof($as_array) > 1)
-			{
-				return implode('|', $as_array);
-			}
-		}
 		return parent::prepare_hidden_fields($step, $key, $action, $field_data);
 	}
 
