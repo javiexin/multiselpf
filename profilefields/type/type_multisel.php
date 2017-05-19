@@ -333,6 +333,26 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 			$error[] = $this->user->lang['MAX_LOWER_MIN'];
 		}
 
+		$field_default_value_size = empty($field_data['field_default_value']) ? 0 : count(explode(self::FIELD_SEPARATOR, $field_data['field_default_value']));
+		if ($field_default_value_size && $field_data['field_minlen'] && $field_default_value_size < $field_data['field_minlen'])
+		{
+			$error[] =  $this->user->lang('FIELD_MULTISEL_TOO_FEW', (int) $field_data['field_minlen'], $this->user->lang['DEFAULT_VALUE']);
+		}
+		if ($field_default_value_size && $field_data['field_maxlen'] && $field_default_value_size > $field_data['field_maxlen'])
+		{
+			$error[] =  $this->user->lang('FIELD_MULTISEL_TOO_MANY', (int) $field_data['field_maxlen'], $this->user->lang['DEFAULT_VALUE']);
+		}
+
+		$field_novalue_size = empty($field_data['field_novalue']) ? 0 : count(explode(self::FIELD_SEPARATOR, $field_data['field_novalue']));
+		if ($field_novalue_size && $field_data['field_minlen'] && $field_novalue_size < $field_data['field_minlen'])
+		{
+			$error[] =  $this->user->lang('FIELD_MULTISEL_TOO_FEW', (int) $field_data['field_minlen'], $this->user->lang['NO_VALUE_OPTION']);
+		}
+		if ($field_novalue_size && $field_data['field_maxlen'] && $field_novalue_size > $field_data['field_maxlen'])
+		{
+			$error[] =  $this->user->lang('FIELD_MULTISEL_TOO_MANY', (int) $field_data['field_maxlen'], $this->user->lang['NO_VALUE_OPTION']);
+		}
+
 		return $error;
 	}
 
@@ -344,7 +364,7 @@ class type_multisel extends \phpbb\profilefields\type\type_base
 		if ($step == 2 && in_array($key, array('field_novalue', 'field_default_value')))
 		{
 			// Read the array of options again if set
-			return ($this->request->is_set($key)) ? implode(self::FIELD_SEPARATOR, $this->request->variable($key, array_map('intval', explode(self::FIELD_SEPARATOR, $current_value)))) : '';
+			return ($this->request->is_set($key)) ? implode(self::FIELD_SEPARATOR, $this->request->variable($key, array(0))) : $current_value;
 		}
 
 		return parent::get_excluded_options($key, $action, $current_value, $field_data, $step);

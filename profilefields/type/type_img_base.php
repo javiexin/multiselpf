@@ -340,12 +340,6 @@ abstract class type_img_base extends \phpbb\profilefields\type\type_base
 				return $current_value;
 			}
 
-			// No change in directory, so no need to continue validation
-			if ($current_value == $storage_path)
-			{
-				return $current_value;
-			}
-
 			// Adjust storage path (no trailing slash, no ./ or ../)
 			if (substr($storage_path, -1, 1) == '/' || substr($storage_path, -1, 1) == '\\')
 			{

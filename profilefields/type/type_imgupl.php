@@ -32,7 +32,7 @@ class type_imgupl extends type_img_base
 			0 => array(
 					'TITLE'		=> $this->user->lang['IMGUPL_STORAGE_PATH'],
 					'EXPLAIN'	=> $this->user->lang['IMGUPL_STORAGE_PATH_EXPLAIN'],
-					'FIELD'		=> '<input type="text" size="20" maxlength="255" name="field_validation" value="' . $field_data['field_validation'] . '" onchange="document.getElementById(\'add_profile_field\').submit();" />',
+					'FIELD'		=> '<input type="text" size="20" maxlength="255" name="field_storage_path" value="' . $field_data['field_validation'] . '" />',
 				),
 			1 => array(
 					'TITLE'		=> $this->user->lang['IMGUPL_MAX_FILESIZE'],

@@ -2,8 +2,8 @@
 	"name": "javiexin/advancedpf",
 	"type": "phpbb-extension",
 	"description": "Adds a set of new Profile Field types, and other improvements to Profile Fields.",
-	"version": "1.0.2",
-	"time": "2017-05-17",
+	"version": "1.0.3",
+	"time": "2017-05-19",
 	"keywords": ["phpbb", "extension", "advancedpf", "profile", "field", "multi", "selection", "image", "upload"],
 	"license": "GPL-2.0",
 	"authors": [
